@@ -1,7 +1,12 @@
+/*eslint-disable*/
+
 import './App.css';
+import React, {useState} from 'react';
+import Data from './data';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
 function App() {
+  let [shoes, shoes변경] = useState(Data);
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -35,29 +40,26 @@ function App() {
 
       <div className="container">
       <div className="row">
-        <div className="col-md-4">
-          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-          <h4>상품명</h4>
-          <p>상품설명 & 가격</p>
-        </div>
-        <div className="col-md-4">
-          <img src="https://codingapple1.github.io/shop/shoes2.jpg" width="100%" />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-        </div>
-        <div className="col-md-4">
-          <img src="https://codingapple1.github.io/shop/shoes3.jpg" width="100%" />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-        </div>
+        {
+          shoes.map((s,index)=>{
+            return <Md shoes={shoes[index]} index={index} />
+          })
+        }
       </div>
     </div>
-
     </div>
-
-    
   );
 }
+function Md(props){
+  return (
+      <div className="col-md-4">
+        <img src={"https://codingapple1.github.io/shop/shoes"+(props.index+1)+".jpg"} width="100%" />
+        <h4>{props.shoes.title}</h4>
+        <p>{props.shoes.content} & {props.shoes.price}</p>
+      </div>
+  );
+}
+
 
 export default App;
 /* 출처 : 코딩애플 - React 리액트 기초부터 쇼핑몰 프로젝트까지! */
