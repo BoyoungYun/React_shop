@@ -4,10 +4,12 @@ import './App.css';
 import React, {useState} from 'react';
 import Data from './data';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import Detail from "./Detail";
+import { Link, Route, Routes } from 'react-router-dom';
+
 
 function App() {
-  let [shoes, shoes변경] = useState(Data);
-  return (
+  return(
     <div className="App">
       <Navbar bg="light" expand="lg">
         <Container>
@@ -15,8 +17,8 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link><Link to="/">Home</Link></Nav.Link>
+              <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -28,6 +30,18 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Routes>
+        <Route exact path="/" element={<Main />}></Route>
+        <Route exact path="/detail" element={<Detail />}></Route>
+      </Routes>
+    </div>
+  );
+}
+function Main()
+{
+  let [shoes, shoes변경] = useState(Data);
+  return (
+    <div className="App">
       <div className="background">
         <h1 className="display-4"><b>20% Sales Off</b></h1>
         <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -37,7 +51,7 @@ function App() {
           <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
       </div>
-
+      
       <div className="container">
       <div className="row">
         {
@@ -59,7 +73,5 @@ function Md(props){
       </div>
   );
 }
-
-
 export default App;
 /* 출처 : 코딩애플 - React 리액트 기초부터 쇼핑몰 프로젝트까지! */
