@@ -9,6 +9,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 
 
 function App() {
+  let [shoes, shoes변경] = useState(Data);
   return(
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -31,15 +32,14 @@ function App() {
         </Container>
       </Navbar>
       <Routes>
-        <Route exact path="/" element={<Main />}></Route>
-        <Route exact path="/detail" element={<Detail />}></Route>
+        <Route exact path="/" element={<Main shoes={shoes}/>}></Route>
+        <Route exact path="/detail/:id" element={<Detail shoes={shoes}/>}></Route>
       </Routes>
     </div>
   );
 }
-function Main()
+function Main(props)
 {
-  let [shoes, shoes변경] = useState(Data);
   return (
     <div className="App">
       <div className="background">
@@ -55,8 +55,8 @@ function Main()
       <div className="container">
       <div className="row">
         {
-          shoes.map((s,index)=>{
-            return <Md shoes={shoes[index]} index={index} />
+          props.shoes.map((s,index)=>{
+            return <Md shoes={props.shoes[index]} index={index} />
           })
         }
       </div>
