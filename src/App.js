@@ -1,11 +1,12 @@
 /*eslint-disable*/
 
 import './App.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Data from './data';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import Detail from "./Detail";
 import { Link, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
         </Container>
       </Navbar>
       <Routes>
-        <Route exact path="/" element={<Main shoes={shoes}/>}></Route>
+        <Route exact path="/" element={<Main shoes={shoes} shoes변경={shoes변경}/>}></Route>
         <Route exact path="/detail/:id" element={<Detail shoes={shoes}/>}></Route>
       </Routes>
     </div>
@@ -40,6 +41,9 @@ function App() {
 }
 function Main(props)
 {
+  let [loading, loading변경] = useState(false);
+  let [button, button변경] = useState(false);
+  let [count, count변경] = useState(0);
   return (
     <div className="App">
       <div className="background">
@@ -60,6 +64,38 @@ function Main(props)
           })
         }
       </div>
+      {
+        loading === true
+        ? <div>로딩 중입니다...</div>
+        : null
+      }
+      {
+        button === false
+        ? (
+          <button className="btn btn-primary" onClick={()=>{
+            loading변경(true);
+            {
+              count === 1
+              ? button변경(true)
+              : null
+            }
+            axios.get('https://codingapple1.github.io/shop/data'+(Number(count)+2)+'.json')
+            .then((response)=>{
+              loading변경(false);
+              count변경(count+1);
+              props.shoes변경([...props.shoes, ...response.data]);
+            })
+            .catch(()=>{
+              loading변경(false);
+              count변경(count+1);
+              console.log('실패했어요');
+            })
+        }}>더보기</button>
+        )
+        : null
+      }
+      
+      
     </div>
     </div>
   );
