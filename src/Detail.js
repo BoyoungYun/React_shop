@@ -10,7 +10,7 @@ let 박스 = styled.div`
 let 제목 = styled.h4`
   font-size : 25px;
 `;
-function Detail()
+function Detail(props)
 {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -41,11 +41,22 @@ function Detail()
           <h4 className="pt-5">{Data[id].title}</h4>
           <p>{Data[id].content}</p>
           <p>{Data[id].price}</p>
-          <button className="btn btn-danger">주문하기</button> 
+          <Info stock={props.stock} id={id}/>
+          <button className="btn btn-danger" onClick={()=>{props.stock변경(order())}}>주문하기</button> 
           <button className="btn btn-danger" onClick={()=>{ navigate('/') }}>뒤로가기</button> 
         </div>
       </div>
 </div> 
   );
+  function order()
+  {
+    let newStock = [...props.stock];
+    newStock[id]--;
+    return newStock;
+  }
+}
+function Info(props)
+{
+  return <p>재고 : {props.stock[props.id]}</p>
 }
 export default Detail;

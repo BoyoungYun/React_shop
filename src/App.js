@@ -11,6 +11,7 @@ import axios from 'axios';
 
 function App() {
   let [shoes, shoes변경] = useState(Data);
+  let [stock, stock변경] = useState([10,11,12]);
   return(
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -34,7 +35,7 @@ function App() {
       </Navbar>
       <Routes>
         <Route exact path="/" element={<Main shoes={shoes} shoes변경={shoes변경}/>}></Route>
-        <Route exact path="/detail/:id" element={<Detail shoes={shoes}/>}></Route>
+        <Route exact path="/detail/:id" element={<Detail shoes={shoes} stock={stock} stock변경={stock변경}/>}></Route>
       </Routes>
     </div>
   );
