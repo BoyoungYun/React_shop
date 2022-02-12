@@ -1,4 +1,4 @@
-$mainColor : #ff0000;
+$mainColor : #000000;
 
 .red{
     color: $mainColor;
@@ -29,4 +29,11 @@ $mainColor : #ff0000;
 
 .my-alert p {
     margin-bottom: 0;
+}
+.wow-enter {
+    opacity: 0;
+}
+.wow-enter-active {
+    opacity: 1;
+    transition: all 500ms;
 }

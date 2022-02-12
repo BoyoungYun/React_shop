@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Data from './data';
 import styled from 'styled-components';
+import { Nav } from 'react-bootstrap';
+import { CSSTransition } from 'react-transition-group';
 import './Detail.scss';
 
 let 박스 = styled.div`
@@ -15,6 +17,8 @@ function Detail(props)
   let { id } = useParams();
   let navigate = useNavigate();
   const [alert, setAlert] = useState(false);
+  const [tab, setTab] = useState(0);
+  const [animation, setAnimation] = useState(false);
 
   useEffect(()=>{
     let timer = setTimeout(()=>{setAlert(true)}, 2000)
@@ -46,6 +50,21 @@ function Detail(props)
           <button className="btn btn-danger" onClick={()=>{ navigate('/') }}>뒤로가기</button> 
         </div>
       </div>
+
+      <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link eventKey="link-0" onClick={()=>{setAnimation(false); setTab(0)}}>Active</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-1" onClick={()=>{setAnimation(false); setTab(1)}}>Option 2</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-2" onClick={()=>{setAnimation(false); setTab(2)}}>Option 3</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <CSSTransition in={animation} classNames="wow" timeout={500}>
+      <TabContent tab={tab} setAnimation={setAnimation}/>
+      </CSSTransition>
 </div> 
   );
   function order()
@@ -54,9 +73,28 @@ function Detail(props)
     newStock[id]--;
     return newStock;
   }
+  
 }
 function Info(props)
 {
   return <p>재고 : {props.stock[props.id]}</p>
+}
+function TabContent(props)
+{
+  useEffect(()=>{
+    props.setAnimation(true);
+  });
+  if(props.tab===0)
+  {
+    return <div>0번째 내용입니다</div>
+  }
+  else if(props.tab===1)
+  {
+    return <div>1번째 내용입니다</div>
+  }
+  else
+  {
+    return <div>2번째 내용입니다</div>
+  }
 }
 export default Detail;
