@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import Data from './data';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import Detail from "./Detail";
+import Cart from "./Cart";
 import { Link, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Main shoes={shoes} shoes변경={shoes변경}/>}></Route>
         <Route exact path="/detail/:id" element={<Detail shoes={shoes} stock={stock} stock변경={stock변경}/>}></Route>
+        <Route exact path="/cart" element={<Cart />}></Route>
       </Routes>
     </div>
   );
