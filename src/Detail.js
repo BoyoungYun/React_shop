@@ -4,6 +4,7 @@ import Data from './data';
 import styled from 'styled-components';
 import { Nav } from 'react-bootstrap';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 import './Detail.scss';
 
 let 박스 = styled.div`
@@ -46,7 +47,11 @@ function Detail(props)
           <p>{Data[id].content}</p>
           <p>{Data[id].price}</p>
           <Info stock={props.stock} id={id}/>
-          <button className="btn btn-danger" onClick={()=>{props.stock변경(order())}}>주문하기</button> 
+          <button className="btn btn-danger" onClick={()=>{
+            props.stock변경(order());
+            props.dispatch({type:'add', payload:{id:Number(id)+3, name:Data[id].title, quan:1}});
+            navigate('/cart');
+            }}>주문하기</button> 
           <button className="btn btn-danger" onClick={()=>{ navigate('/') }}>뒤로가기</button> 
         </div>
       </div>
@@ -97,4 +102,12 @@ function TabContent(props)
     return <div>2번째 내용입니다</div>
   }
 }
-export default Detail;
+function stateToProps(state)
+{
+  return {
+    state:state.reducer,
+    alertState:state.reducer2
+  }
+}
+
+export default connect(stateToProps)(Detail);

@@ -26,6 +26,12 @@ function reducer(state = initialState, action)
     newState[action.index].quan--;
     return newState;
   }
+  else if(action.type==='add')
+  {
+    let newState = [...state];
+    newState.push(action.payload);
+    return newState;
+  }
   else
   {
     return state;
