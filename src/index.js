@@ -17,18 +17,26 @@ function reducer(state = initialState, action)
   if(action.type==='plus')
   {
     let newState = [...state];
-    newState[action.index].quan++;
+    newState[action.payload.id].quan++;
     return newState;
   }
-  else if(action.type==='minus' && state[action.index].quan>0)
+  else if(action.type==='minus' && state[action.payload.id].quan>0)
   {
     let newState = [...state];
-    newState[action.index].quan--;
+    newState[action.payload.id].quan--;
     return newState;
   }
   else if(action.type==='add')
   {
     let newState = [...state];
+    for(var i=0; i<Object.values(state).length; i++)
+    {
+      if(state[i].id===action.payload.id)
+      {
+        newState[action.payload.id].quan++;
+        return newState;
+      }
+    }
     newState.push(action.payload);
     return newState;
   }

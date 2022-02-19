@@ -20,6 +20,7 @@ function Detail(props)
   const [alert, setAlert] = useState(false);
   const [tab, setTab] = useState(0);
   const [animation, setAnimation] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(()=>{
     let timer = setTimeout(()=>{setAlert(true)}, 2000)
@@ -49,8 +50,9 @@ function Detail(props)
           <Info stock={props.stock} id={id}/>
           <button className="btn btn-danger" onClick={()=>{
             props.stock변경(order());
-            props.dispatch({type:'add', payload:{id:Number(id)+3, name:Data[id].title, quan:1}});
+            props.dispatch({type:'add', payload:{id:count+3, name:Data[id].title, quan:1}});
             navigate('/cart');
+            setCount(count+1);
             }}>주문하기</button> 
           <button className="btn btn-danger" onClick={()=>{ navigate('/') }}>뒤로가기</button> 
         </div>
