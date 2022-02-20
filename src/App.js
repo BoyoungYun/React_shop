@@ -6,7 +6,7 @@ import Data from './data';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import Detail from "./Detail";
 import Cart from "./Cart";
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -104,8 +104,9 @@ function Main(props)
   );
 }
 function Md(props){
+  let navigate = useNavigate();
   return (
-      <div className="col-md-4">
+      <div className="col-md-4" onClick={()=>{navigate('/detail/'+props.shoes.id)}}>
         <img src={"https://codingapple1.github.io/shop/shoes"+(props.index+1)+".jpg"} width="100%" />
         <h4>{props.shoes.title}</h4>
         <p>{props.shoes.content} & {props.shoes.price}</p>
