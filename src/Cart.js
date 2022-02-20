@@ -1,9 +1,12 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import "./Detail.scss";
-function Cart(props)
+function Cart()
 {
+    let state = useSelector((state)=>state);
+    let dispatch = useDispatch();
+    console.log(state);
     return (
     <div>
         <Table responsive="sm">
@@ -14,15 +17,15 @@ function Cart(props)
                 <th>변경</th>
             </tr>
             {
-                props.state.map((s,index)=>{
+                state.reducer.map((s,index)=>{
                     return (
                     <tr key={index}>
                         <td>{s.id}</td>
                         <td>{s.name}</td>
                         <td>{s.quan}</td>
                         <td>
-                            <button onClick={()=>{props.dispatch({type : 'plus', payload : {id : s.id}})}}>+</button>
-                            <button onClick={()=>{props.dispatch({type : 'minus', payload : {id : s.id}})}}>-</button>
+                            <button onClick={()=>{dispatch({type : 'plus', payload : {id : s.id}})}}>+</button>
+                            <button onClick={()=>{dispatch({type : 'minus', payload : {id : s.id}})}}>-</button>
                         </td>
                     </tr>
                     )
@@ -30,10 +33,10 @@ function Cart(props)
             }
         </Table>
         {
-            props.alertState === true
+            state.reducer2 === true
             ? <div className="my-alert-yellow">
                 <p>지금 구매하시면 신규할인 20%</p>
-                <button onClick={()=>{props.dispatch({type:'close'})}}>닫기</button>
+                <button onClick={()=>{dispatch({type:'close'})}}>닫기</button>
             </div>
             : null
         }
@@ -42,11 +45,12 @@ function Cart(props)
     </div>
     );
 }
-function shoeData(state)
+
+/*function shoeData(state)
 {
     return {
         state:state.reducer,
         alertState:state.reducer2
     }
-}
-export default connect(shoeData)(Cart);
+}*/
+export default Cart;
