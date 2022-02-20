@@ -4,7 +4,7 @@ import Data from './data';
 import styled from 'styled-components';
 import { Nav } from 'react-bootstrap';
 import { CSSTransition } from 'react-transition-group';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './Detail.scss';
 
 let 박스 = styled.div`
@@ -13,6 +13,7 @@ let 박스 = styled.div`
 let 제목 = styled.h4`
   font-size : 25px;
 `;
+
 function Detail(props)
 {
   let { id } = useParams();
@@ -20,8 +21,8 @@ function Detail(props)
   const [alert, setAlert] = useState(false);
   const [tab, setTab] = useState(0);
   const [animation, setAnimation] = useState(false);
-  const [count, setCount] = useState(0);
-
+  let state = useSelector((state)=>state);
+  let dispatch = useDispatch();
   useEffect(()=>{
     let timer = setTimeout(()=>{setAlert(true)}, 2000)
     return ()=>{clearTimeout(timer)}
@@ -50,9 +51,8 @@ function Detail(props)
           <Info stock={props.stock} id={id}/>
           <button className="btn btn-danger" onClick={()=>{
             props.stock변경(order());
-            props.dispatch({type:'add', payload:{id:count+3, name:Data[id].title, quan:1}});
+            dispatch({type:'add', payload:{id:Number(id)+3, name:Data[id].title, quan:1}});
             navigate('/cart');
-            setCount(count+1);
             }}>주문하기</button> 
           <button className="btn btn-danger" onClick={()=>{ navigate('/') }}>뒤로가기</button> 
         </div>
@@ -104,12 +104,5 @@ function TabContent(props)
     return <div>2번째 내용입니다</div>
   }
 }
-function stateToProps(state)
-{
-  return {
-    state:state.reducer,
-    alertState:state.reducer2
-  }
-}
 
-export default connect(stateToProps)(Detail);
+export default Detail;

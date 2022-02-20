@@ -6,7 +6,6 @@ function Cart()
 {
     let state = useSelector((state)=>state);
     let dispatch = useDispatch();
-    console.log(state);
     return (
     <div>
         <Table responsive="sm">

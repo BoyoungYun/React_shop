@@ -29,13 +29,11 @@ function reducer(state = initialState, action)
   else if(action.type==='add')
   {
     let newState = [...state];
-    for(var i=0; i<Object.values(state).length; i++)
+    let found=state.findIndex((a)=>{return a.name===action.payload.name});
+    if(found>=0)
     {
-      if(state[i].id===action.payload.id)
-      {
-        newState[action.payload.id].quan++;
-        return newState;
-      }
+      newState[found].quan++;
+      return newState;
     }
     newState.push(action.payload);
     return newState;
